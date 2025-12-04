@@ -34,13 +34,13 @@ public class PizzaRepositoryImpl implements PizzaRepository {
         String sql = "select id, nom, prix from pizza  where id = ?";
         //String sql = "select id, nom, prix from pizza  where id = ?";
 
-        Pizza pizza = jdbcTemplate.queryForObject(sql, new PizzaRowMapper());
+        Pizza pizza = jdbcTemplate.queryForObject(sql, new PizzaRowMapper(), id);
         return pizza;
     }
 
     @Override
     public Pizza savePizza(Pizza pizza) {
-        String sql = "insert into Pizza (id, nom, prix) values (?, ?, ?)";
+        String sql = "insert into pizza (id, nom, prix) values (?, ?, ?)";
 
         PreparedStatementSetter pss = new PreparedStatementSetter() {
             @Override public void setValues(PreparedStatement ps) throws SQLException {

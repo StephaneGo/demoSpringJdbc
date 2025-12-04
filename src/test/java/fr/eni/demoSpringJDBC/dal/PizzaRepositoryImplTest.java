@@ -16,6 +16,26 @@ public class PizzaRepositoryImplTest {
     @Autowired
     private PizzaRepository pizzaRepository;
 
+
+
+    @Test
+    @DisplayName("test ajout pizza cas droit")
+    public void testAjoutPizzaCasDroit() {
+        //AAA
+        //Arrange : Préparation du test
+        Pizza pizza = new Pizza(5, "reine2", 12.0f);
+
+        //Act : Appel de la méthode à tester
+        Pizza newPizza = pizzaRepository.savePizza(pizza);
+
+        //Assert : Vérification du résultat du Act
+        assertNotNull(pizza);
+        Pizza piz = pizzaRepository.findPizzaById(pizza.getId());
+        assertEquals(pizza, piz);
+
+    }
+
+
     @Test
     @DisplayName("test findAllPizzas cas plusieurs pizzas existent") //Optionnel
     public void testFindAllPizzasCasPlusieursPizzas() {
@@ -28,7 +48,6 @@ public class PizzaRepositoryImplTest {
         //Assert : Vérification du résultat du Act
         assertNotNull(pizzas);
         assertEquals(3, pizzas.size());
-
     }
 
    // @Test
