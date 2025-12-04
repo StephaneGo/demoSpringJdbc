@@ -10,4 +10,7 @@ public interface PizzaRepository {
     List<Pizza> findAllPizzas();
 
     Pizza findPizzaById(int id);
+
+    //Ajouter une pizza
+    Pizza savePizza(Pizza pizza);
 }
