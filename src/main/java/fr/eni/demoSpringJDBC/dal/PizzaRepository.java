@@ -13,4 +13,6 @@ public interface PizzaRepository {
 
     //Ajouter une pizza
     Pizza savePizza(Pizza pizza);
+
+    public void deletePizza(int id);
 }

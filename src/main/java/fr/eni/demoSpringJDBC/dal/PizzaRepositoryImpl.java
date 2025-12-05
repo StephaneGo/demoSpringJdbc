@@ -1,6 +1,8 @@
 package fr.eni.demoSpringJDBC.dal;
 
 import fr.eni.demoSpringJDBC.bo.Pizza;
+import fr.eni.demoSpringJDBC.exception.PizzaNotFound;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,7 +36,16 @@ public class PizzaRepositoryImpl implements PizzaRepository {
         String sql = "select id, nom, prix from pizza  where id = ?";
         //String sql = "select id, nom, prix from pizza  where id = ?";
 
-        Pizza pizza = jdbcTemplate.queryForObject(sql, new PizzaRowMapper(), id);
+        Pizza pizza = null;
+
+        try {
+            pizza = jdbcTemplate.queryForObject(sql, new PizzaRowMapper(), id);
+
+        }catch(EmptyResultDataAccessException e){
+            throw new PizzaNotFound();
+        }
+
+
         return pizza;
     }
 
@@ -51,6 +62,11 @@ public class PizzaRepositoryImpl implements PizzaRepository {
          jdbcTemplate.update(sql, pss );
 
         return pizza;
+    }
+
+    public void deletePizza(int id) {
+        String sql = "delete from pizza where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     class PizzaRowMapper implements RowMapper<Pizza> {
